@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset HTML to CSV Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .notification {
+            display: none;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+        }
+        .notification.success {
+            background-color: #28a745; /* Green */
+        }
+        .notification.error {
+            background-color: #dc3545; /* Red */
+        }
+        .notification.info {
+            background-color: #17a2b8; /* Blue */
+        }
+    </style>
+</head>
+<body>
+    <h1>Asset HTML to CSV Converter</h1>
+    <p>Extract asset details and the employee ID they are assigned to. Format output as CSV.</p>
+    
+    <div id="notification" class="notification"></div>
+    
+    <h2>Paste RAW Asset HTML Code</h2>
+    <textarea id="htmlInput" placeholder="Paste your HTML code here..."></textarea>
+    <button onclick="convertToCSV()">Convert to CSV</button>
+    
+    <h2>CSV Output</h2>
+    <textarea id="csvOutput" readonly></textarea>
+    <button onclick="saveCSV()">Save as CSV</button>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <script src="app.js"></script>
+</body>
+</html>
