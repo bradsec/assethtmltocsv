@@ -14,26 +14,28 @@ function convertToCSV() {
     const doc = parser.parseFromString(htmlInput, 'text/html');
 
     let csvData = [];
-    
+
     doc.querySelectorAll("div.col-4[data-name='memberAssets']").forEach(card => {
         const employeeIDElement = card.querySelector(".card-header");
         let employeeID = "";
+        let fullName = "";
         if (employeeIDElement) {
             const headerText = employeeIDElement.textContent.trim();
             const parts = headerText.split(" ");
             if (parts.length > 0) {
                 employeeID = parts[0];
+                fullName = parts.slice(1).join(" ");
             }
         }
 
         card.querySelectorAll(".card-body table tbody tr").forEach(row => {
             const cells = row.querySelectorAll("td");
             if (cells.length > 0) {
+                const serialNumber = cells[0].textContent.trim();
                 const type = cells[1].textContent.trim();
                 const make = cells[2].textContent.trim();
                 const model = cells[3].textContent.trim();
-                const serialNumber = cells[0].textContent.trim();
-                const rowData = [type, make, model, serialNumber, employeeID];
+                const rowData = [serialNumber, type, make, model, employeeID, fullName];
                 csvData.push(rowData);
             }
         });
@@ -45,7 +47,7 @@ function convertToCSV() {
         return;
     }
 
-    let csvContent = "Type,Make,Model,Serial Number,Employee ID\n";
+    let csvContent = "Serial Number,Type,Make,Model,Employee ID,Full Name\n";
     csvData.forEach(row => {
         csvContent += row.join(",") + "\n";
     });
@@ -53,6 +55,7 @@ function convertToCSV() {
     document.getElementById('csvOutput').value = csvContent;
     showNotification('Content processed successfully.', 'success');
 }
+
 
 function saveCSV() {
     const csvContent = document.getElementById('csvOutput').value;
